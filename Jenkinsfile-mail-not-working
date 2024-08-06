@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('No-op') {
+            steps {
+                sh 'ls'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'One way or another, I have finished'
+            deleteDir() /* clean up our workspace */
+            mail    to: 'amir.kedis@gmail.com',
+                    subject: "Ran Pipeline: ${currentBuild.fullDisplayName}",
+                    body: "we ran this pipeline: ${env.BUILD_URL}"
+                
+        }
+        success {
+            echo 'I succeeded!'
+        }
+        unstable {
+            echo 'I am unstable :/'
+        }
+        failure {
+            echo 'I failed :('
+        }
+        changed {
+            echo 'Things were different before...'
+        }
+    }
+}

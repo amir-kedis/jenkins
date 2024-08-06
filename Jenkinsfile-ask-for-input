@@ -1,0 +1,15 @@
+pipeline {
+    
+    agent any
+    
+    stages {
+        
+        stage('Build') {
+            steps {
+                sh 'ls'
+                input "Why do you ask for input in an automation workflow"
+            }
+
+        }
+    }
+}
